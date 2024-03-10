@@ -4,7 +4,7 @@ DataSifter, a data obfuscation algorithm for senstitive clinical data. Developed
 
 
 
-# Steps 1-6
+# Workflow for the DataSifter algorithm
 
 
 ## Step 1 - Preprocessing
