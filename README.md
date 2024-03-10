@@ -68,7 +68,7 @@ wordForReplacement: A dictionary where keys are sensitive factors (outcomes) and
 ## Step 6 - Evaluate based on utility and privacy metric
 Recast Original text and Obfuscated text into tabular format
 
-Utility analysis
+### Utility analysis
 Semantic similarity
 Original and obfuscated text is cast into word embedding using word2vec. The word2vec model is trained on the ‘TEXT’ column of the MIMIC-III dataset. 
 A similarity score calculated for each text entry using cosine similarity and the average is taken, producing a similarity score. Higher score means more similarity between the texts.
@@ -78,7 +78,7 @@ Makes sure that the obfuscated text data is coherent and interpretable
 Run the readability analysis on the original text to obtain baseline readability (~52.3295). Then run readability analysis on the obfuscated texts to obtain scores and compare.
 Training a classification model (with BERT) using the original text and apply this model to the sifted text to calculate data utility loss (For future implementation)
 
-Privacy analysis
+### Privacy analysis
 Identity disclosure risk analysis
 Using spaCy's NER (Named Entity Recognition) model, find the sensitive entities, which could be used to identify the patient, that exists in the obfuscated data
 The sensitive labels are: 
