@@ -6,6 +6,7 @@ Latest Update: Dec 2023
 
 **Steps 1-6**
 
+
 **Step 1 - Preprocessing**
 
 For the preprocessing step of this algorithm, we performed the following common preprocessing techniques:
@@ -15,6 +16,9 @@ For the preprocessing step of this algorithm, we performed the following common 
 3. Stemming
 4. Converted all characters to lowercase
 5. Removed non-alphanumeric characters
+
+
+
 
 **Step 2 - Identify Sensitive outcomes to protect**
 
@@ -26,19 +30,18 @@ For the preprocessing step of this algorithm, we performed the following common 
 
 These are the three sensitive outcomes that we wanted to protect.
 
+
+
 **Step 3 - Using LightGBM to identify keywords to protect in the text data**
 
-A dictionary of keywords is initialized to store the results of feature importance for different outcomes. It then iterates over various outcomes. For each outcome, it processes the data: Extracts the target variable y from the dataframe df. Converts the text column TEXT into a numerical format using CountVectorizer using unigrams. The data is split into training and test sets using train_test_split. This is in LightGBM-specific data format using lgb.Dataset.
+1. A dictionary of keywords is initialized to store the results of feature importance for different outcomes. It then iterates over various outcomes.
+2. For each outcome, it processes the data: Extracts the target variable y from the dataframe df. Converts the text column TEXT into a numerical format using CountVectorizer using unigrams.
+3. The data is split into training and test sets using train_test_split. This is in LightGBM-specific data format using lgb.Dataset.
+4. Hyperparameters for the LightGBM model are defined: num_leaves: 31, metric: 'multi_logloss', num_round (#boosting rounds): 10
+5. The LightGBM model is trained using the lgb.train function with the defined hyperparameters. Validation is then performed on the test set.
+6. The top predicative keywords for each sensitive outcome are stored in the keywords dictionary.
 
-Hyperparameters for the LightGBM model are defined
 
-num_leaves: 31
-
-metric: 'multi_logloss'
-
-num_round (#boosting rounds): 10
-
-The LightGBM model is trained using the lgb.train function with the defined hyperparameters. Validation is then performed on the test set. The top predicative keywords for each sensitive outcome are stored in the keywords dictionary.
 
 **Step 4 - Build Semantic radius around the top keywords using word2vec and generate keywords to replace based on obfuscation level**
 
@@ -48,13 +51,12 @@ Input 1 (for obfuscation): # keywords (higher = more obfuscation)
 
 Input 2  (for obfuscation): radius around each keyword using word2vec (further away = more obfuscation) 
 
-
-A class MySentences is defined to process the text data, which splits each sentence into words and yields them as separate tokens. It's designed to work with the Word2Vec model, which requires tokenized sentences as input.
-A class W2V is defined to encapsulate the Word2Vec model training and querying processes.
-The constructor of this class initializes the Word2Vec model with various hyperparameters like min_count, window, vector_size, and others.
-get_similar_word() method queries the model for the most similar words to each keyword, using the most_similar function of the Word2Vec model. It takes a list of keywords and a specified semantic radius range (start_radius and end_radius). It returns a random word from the list of words that are semantically similar to each keyword within the specified radius.
-obfuscate() function replaces keywords in a sentence with similar words obtained from the model
-We then obtain the top 10 keywords for each sensitive outcome based on the obfuscation level. We store this in a vector called wordsReplacement
+1. A class MySentences is defined to process the text data, which splits each sentence into words and yields them as separate tokens. It's designed to work with the Word2Vec model, which requires tokenized sentences as input.
+2. A class W2V is defined to encapsulate the Word2Vec model training and querying processes.
+- The constructor of this class initializes the Word2Vec model with various hyperparameters like min_count, window, vector_size, and others.
+- get_similar_word() method queries the model for the most similar words to each keyword, using the most_similar function of the Word2Vec model. It takes a list of keywords and a specified semantic radius range (start_radius and end_radius). It returns a random word from the list of words that are semantically similar to each keyword within the specified radius.
+- obfuscate() function replaces keywords in a sentence with similar words obtained from the model
+3. We then obtain the top 10 keywords for each sensitive outcome based on the obfuscation level. We store this in a vector called wordsReplacement
 
 
 **Step 5 - Apply obfuscation to text**
