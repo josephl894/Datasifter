@@ -1,21 +1,28 @@
 Work in Progress
 
-DataSifter, a data obfuscation algorithm for senstitive clinical data. Latest Update: Dec 2023
+DataSifter, a data obfuscation algorithm for senstitive clinical data. 
+
+Latest Update: Dec 2023
 
 **Steps 1-6**
 
 **Step 1 - Preprocessing**
 For the preprocessing step of this algorithm, we performed the following common preprocessing techniques:
-Expand contractions
-Lemmatization
-Stemming
-Converted all characters to lowercase
-Removed non-alphanumeric characters
+
+1. Expand contractions
+2. Lemmatization
+3. Stemming
+4. Converted all characters to lowercase
+5. Removed non-alphanumeric characters
 
 **Step 2 - Identify Sensitive outcomes to protect**
+
 'Length_of_stay_avg’: continuous
+
 'Religion': categorical with 5 levels
+
 'Gender': binary
+
 These are the three sensitive outcomes that we wanted to protect.
 
 **Step 3 - Using LightGBM to identify keywords to protect in the text data**
