@@ -82,6 +82,7 @@ Training a classification model (with BERT) using the original text and apply th
 
 ### Privacy analysis
 **Identity disclosure risk analysis**
+
 Using spaCy's NER (Named Entity Recognition) model, find the sensitive entities, which could be used to identify the patient, that exists in the obfuscated data.
 
 The sensitive labels are: 
