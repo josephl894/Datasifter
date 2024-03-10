@@ -7,6 +7,7 @@ Latest Update: Dec 2023
 **Steps 1-6**
 
 **Step 1 - Preprocessing**
+
 For the preprocessing step of this algorithm, we performed the following common preprocessing techniques:
 
 1. Expand contractions
@@ -26,20 +27,26 @@ For the preprocessing step of this algorithm, we performed the following common 
 These are the three sensitive outcomes that we wanted to protect.
 
 **Step 3 - Using LightGBM to identify keywords to protect in the text data**
-A dictionary of keywords is initialized to store the results of feature importance for different outcomes. It then iterates over various outcomes. 
-For each outcome, it processes the data: Extracts the target variable y from the dataframe df. Converts the text column TEXT into a numerical format using CountVectorizer using unigrams.
-The data is split into training and test sets using train_test_split. This is in LightGBM-specific data format using lgb.Dataset.
+
+A dictionary of keywords is initialized to store the results of feature importance for different outcomes. It then iterates over various outcomes. For each outcome, it processes the data: Extracts the target variable y from the dataframe df. Converts the text column TEXT into a numerical format using CountVectorizer using unigrams. The data is split into training and test sets using train_test_split. This is in LightGBM-specific data format using lgb.Dataset.
+
 Hyperparameters for the LightGBM model are defined
-num_leaves: 31, metric: 'multi_logloss', num_round (#boosting rounds): 10
-The LightGBM model is trained using the lgb.train function with the defined hyperparameters. Validation is then performed on the test set.
-The top predicative keywords for each sensitive outcome are stored in the keywords dictionary.
+
+num_leaves: 31
+
+metric: 'multi_logloss'
+
+num_round (#boosting rounds): 10
+
+The LightGBM model is trained using the lgb.train function with the defined hyperparameters. Validation is then performed on the test set. The top predicative keywords for each sensitive outcome are stored in the keywords dictionary.
 
 **Step 4 - Build Semantic radius around the top keywords using word2vec and generate keywords to replace based on obfuscation level**
+
 For example, the top 10 keywords for the outcome “Marital Status” are: 'wife', 'husband', 'married', 'alone', 'daughter', 'widowed', 'son', 'lives', 'sex', 'she'. Based on semantic meanings, we can extract two “semantic clusters”: 1: 'wife', 'husband', 'daughter', ‘son’; 2: 'married', 'alone', 'widowed'. This step is to guarantee the readability of obfuscated text.
+
 Input 1 (for obfuscation): # keywords (higher = more obfuscation)
+
 Input 2  (for obfuscation): radius around each keyword using word2vec (further away = more obfuscation) 
-
-
 
 
 A class MySentences is defined to process the text data, which splits each sentence into words and yields them as separate tokens. It's designed to work with the Word2Vec model, which requires tokenized sentences as input.
