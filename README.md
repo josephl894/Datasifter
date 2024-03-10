@@ -1,7 +1,9 @@
 Work in Progress
+
 DataSifter, a data obfuscation algorithm for senstitive clinical data. Latest Update: Dec 2023
 
 **Steps 1-6**
+
 **Step 1 - Preprocessing**
 For the preprocessing step of this algorithm, we performed the following common preprocessing techniques:
 Expand contractions
