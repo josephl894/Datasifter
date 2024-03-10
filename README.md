@@ -1,6 +1,6 @@
 **Work in Progress. Latest Update: Dec 2023**
 
-DataSifter, a data obfuscation algorithm for senstitive clinical data. Developed as part of a SOCR research project at the University of Michigan
+DataSifter, a data obfuscation algorithm for senstitive clinical data. Developed as part of a MDP research project at the University of Michigan
 
 
 
