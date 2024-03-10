@@ -1,8 +1,8 @@
-**Work in Progress
+**Work in Progress. Latest Update: Dec 2023**
 
 DataSifter, a data obfuscation algorithm for senstitive clinical data. 
 
-Latest Update: Dec 2023**
+
 
 # Steps 1-6
 
