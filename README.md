@@ -4,10 +4,10 @@ DataSifter, a data obfuscation algorithm for senstitive clinical data.
 
 Latest Update: Dec 2023
 
-**Steps 1-6**
+#Steps 1-6#
 
 
-**Step 1 - Preprocessing**
+##Step 1## - Preprocessing
 
 For the preprocessing step of this algorithm, we performed the following common preprocessing techniques:
 
@@ -20,7 +20,7 @@ For the preprocessing step of this algorithm, we performed the following common 
 
 
 
-**Step 2 - Identify Sensitive outcomes to protect**
+##Step 2l## - Identify Sensitive outcomes to protect
 
 'Length_of_stay_avg’: continuous
 
@@ -32,7 +32,7 @@ These are the three sensitive outcomes that we wanted to protect.
 
 
 
-**Step 3 - Using LightGBM to identify keywords to protect in the text data**
+##Step 3## - Using LightGBM to identify keywords to protect in the text data
 
 1. A dictionary of keywords is initialized to store the results of feature importance for different outcomes. It then iterates over various outcomes.
 2. For each outcome, it processes the data: Extracts the target variable y from the dataframe df. Converts the text column TEXT into a numerical format using CountVectorizer using unigrams.
@@ -43,7 +43,7 @@ These are the three sensitive outcomes that we wanted to protect.
 
 
 
-**Step 4 - Build Semantic radius around the top keywords using word2vec and generate keywords to replace based on obfuscation level**
+##Step 4l## - Build Semantic radius around the top keywords using word2vec and generate keywords to replace based on obfuscation leve
 
 For example, the top 10 keywords for the outcome “Marital Status” are: 'wife', 'husband', 'married', 'alone', 'daughter', 'widowed', 'son', 'lives', 'sex', 'she'. Based on semantic meanings, we can extract two “semantic clusters”: 1: 'wife', 'husband', 'daughter', ‘son’; 2: 'married', 'alone', 'widowed'. This step is to guarantee the readability of obfuscated text.
 
@@ -67,6 +67,7 @@ wordForReplacement: A dictionary where keys are sensitive factors (outcomes) and
 
 **Step 6 - Evaluate based on utility and privacy metric**
 Recast Original text and Obfuscated text into tabular format
+
 Utility analysis
 Semantic similarity
 Original and obfuscated text is cast into word embedding using word2vec. The word2vec model is trained on the ‘TEXT’ column of the MIMIC-III dataset. 
