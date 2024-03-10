@@ -4,10 +4,10 @@ DataSifter, a data obfuscation algorithm for senstitive clinical data.
 
 Latest Update: Dec 2023
 
-#Steps 1-6#
+# Steps 1-6
 
 
-##Step 1## - Preprocessing
+## Step 1 - Preprocessing
 
 For the preprocessing step of this algorithm, we performed the following common preprocessing techniques:
 
@@ -20,7 +20,7 @@ For the preprocessing step of this algorithm, we performed the following common 
 
 
 
-##Step 2l## - Identify Sensitive outcomes to protect
+## Step 2 - Identify Sensitive outcomes to protect
 
 'Length_of_stay_avg’: continuous
 
@@ -32,7 +32,7 @@ These are the three sensitive outcomes that we wanted to protect.
 
 
 
-##Step 3## - Using LightGBM to identify keywords to protect in the text data
+## Step 3 - Using LightGBM to identify keywords to protect in the text data
 
 1. A dictionary of keywords is initialized to store the results of feature importance for different outcomes. It then iterates over various outcomes.
 2. For each outcome, it processes the data: Extracts the target variable y from the dataframe df. Converts the text column TEXT into a numerical format using CountVectorizer using unigrams.
@@ -43,7 +43,7 @@ These are the three sensitive outcomes that we wanted to protect.
 
 
 
-##Step 4l## - Build Semantic radius around the top keywords using word2vec and generate keywords to replace based on obfuscation leve
+## Step 4 - Build Semantic radius around the top keywords using word2vec and generate keywords to replace based on obfuscation leve
 
 For example, the top 10 keywords for the outcome “Marital Status” are: 'wife', 'husband', 'married', 'alone', 'daughter', 'widowed', 'son', 'lives', 'sex', 'she'. Based on semantic meanings, we can extract two “semantic clusters”: 1: 'wife', 'husband', 'daughter', ‘son’; 2: 'married', 'alone', 'widowed'. This step is to guarantee the readability of obfuscated text.
 
@@ -59,13 +59,13 @@ Input 2  (for obfuscation): radius around each keyword using word2vec (further a
 3. We then obtain the top 10 keywords for each sensitive outcome based on the obfuscation level. We store this in a vector called wordsReplacement
 
 
-**Step 5 - Apply obfuscation to text**
+## Step 5 - Apply obfuscation to text
 Taking in sensitive factors (outcomes), level of obfuscation, wordForReplacement dictionary as input, the obfuscate() method replaces the sensitive words with their corresponding keywords based on the level of obfuscation. This obfuscation is applied three times to yield three different datasets, once for each level of obfuscation of small, medium, and large.
 
 wordForReplacement: A dictionary where keys are sensitive factors (outcomes) and values are DataFrames containing words and their corresponding replacements at different obfuscation levels. This is generated from the previous step as the vector wordsReplacement.
 
 
-**Step 6 - Evaluate based on utility and privacy metric**
+## Step 6 - Evaluate based on utility and privacy metric
 Recast Original text and Obfuscated text into tabular format
 
 Utility analysis
