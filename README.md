@@ -69,32 +69,39 @@ wordForReplacement: A dictionary where keys are sensitive factors (outcomes) and
 Recast Original text and Obfuscated text into tabular format
 
 ### Utility analysis
-Semantic similarity
-Original and obfuscated text is cast into word embedding using word2vec. The word2vec model is trained on the ‘TEXT’ column of the MIMIC-III dataset. 
-A similarity score calculated for each text entry using cosine similarity and the average is taken, producing a similarity score. Higher score means more similarity between the texts.
-Readability analysis
-Returns a score based on the flesch_reading_ease metric
-Makes sure that the obfuscated text data is coherent and interpretable
-Run the readability analysis on the original text to obtain baseline readability (~52.3295). Then run readability analysis on the obfuscated texts to obtain scores and compare.
+**Semantic similarity**
+- Original and obfuscated text is cast into word embedding using word2vec. The word2vec model is trained on the ‘TEXT’ column of the MIMIC-III dataset. 
+= A similarity score calculated for each text entry using cosine similarity and the average is taken, producing a similarity score. Higher score means more similarity between the texts.
+
+**Readability analysis**
+- Returns a score based on the flesch_reading_ease metric
+= Makes sure that the obfuscated text data is coherent and interpretable
+= Run the readability analysis on the original text to obtain baseline readability (~52.3295). Then run readability analysis on the obfuscated texts to obtain scores and compare.
+
 Training a classification model (with BERT) using the original text and apply this model to the sifted text to calculate data utility loss (For future implementation)
 
 ### Privacy analysis
-Identity disclosure risk analysis
-Using spaCy's NER (Named Entity Recognition) model, find the sensitive entities, which could be used to identify the patient, that exists in the obfuscated data
+**Identity disclosure risk analysis**
+Using spaCy's NER (Named Entity Recognition) model, find the sensitive entities, which could be used to identify the patient, that exists in the obfuscated data.
+
 The sensitive labels are: 
-PERSON: Names of patients, relatives, or doctors.
-DATE: Dates of appointments, procedures, births, etc.
-ORG: Names of hospitals, insurance companies, or other organizations.
-GPE: Geographical locations like cities, countries, which might indicate where the patient lives or where the treatment occurred.
-CARDINAL: Numbers that could include things like patient IDs, room numbers, or other identifying numeric data.
-TIME: Specific times that might be related to appointments or procedures.
+1. PERSON: Names of patients, relatives, or doctors.
+2. DATE: Dates of appointments, procedures, births, etc.
+3. ORG: Names of hospitals, insurance companies, or other organizations.
+4. GPE: Geographical locations like cities, countries, which might indicate where the patient lives or where the treatment occurred.
+5. CARDINAL: Numbers that could include things like patient IDs, room numbers, or other identifying numeric data.
+6. TIME: Specific times that might be related to appointments or procedures.
+
 A privacy score is calculated based on the relative weighting of the sensitive entities detected in the obfuscated data
 Weighting is assigned as follows:
-'PERSON': 10
-'DATE': 5
-'ORG': 3
-'GPE': 2
-'CARDINAL': 2
-'TIME': 2
+1. 'PERSON': 10
+2. 'DATE': 5
+3. 'ORG': 3
+4. 'GPE': 2
+5. 'CARDINAL': 2
+6. 'TIME': 2
+
 Compute a privacy score for the original dataset first. Then compute a privacy score for each of the small, medium, and large obfuscated datasets. Finally, compare the scores relative to each other to find the best privacy-preserving obfuscation parameters.
+
+
 Compute BLEU score between text entries. (For future implementation)
