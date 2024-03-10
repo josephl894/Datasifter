@@ -18,9 +18,7 @@ For the preprocessing step of this algorithm, we performed the following common 
 **Step 2 - Identify Sensitive outcomes to protect**
 
 'Length_of_stay_avg’: continuous
-
 'Religion': categorical with 5 levels
-
 'Gender': binary
 
 These are the three sensitive outcomes that we wanted to protect.
